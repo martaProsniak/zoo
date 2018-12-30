@@ -1,6 +1,9 @@
 package pl.mp.animals;
 
-public class Bird extends Animal{
+/**
+ * Bird representation.
+ */
+public abstract class Bird extends Animal{
     /**
      * Bird feathers color.
      */
@@ -12,9 +15,5 @@ public class Bird extends Animal{
 
     public void setFeathersColor(String feathersColor) {
         this.feathersColor = feathersColor;
-    }
-
-    @Override
-    public void eat() {
     }
 }

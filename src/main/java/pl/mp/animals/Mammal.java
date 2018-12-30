@@ -1,8 +1,11 @@
 package pl.mp.animals;
 
-public class Mammal extends Animal {
+/**
+ * Mammal representation.
+ */
+public abstract class Mammal extends Animal {
     /**
-     * Mammal fur collor.
+     * Mammal fur color.
      */
     private String furColor;
 
@@ -12,9 +15,5 @@ public class Mammal extends Animal {
 
     public void setFurColor(String furColor) {
         this.furColor = furColor;
-    }
-
-    @Override
-    public void eat() {
     }
 }

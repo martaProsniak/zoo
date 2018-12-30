@@ -1,8 +1,11 @@
 package pl.mp.animals;
 
-public class Lizard extends Animal {
+/**
+ * Lizard representation.
+ */
+public abstract class Lizard extends Animal {
     /**
-     * Lizard scale color
+     * Lizard scale color.
      */
     private String scaleColor;
 
@@ -14,7 +17,5 @@ public class Lizard extends Animal {
         this.scaleColor = scaleColor;
     }
 
-    @Override
-    public void eat() {
-    }
 }
+
