@@ -1,4 +1,4 @@
-package pl.mp.animals;
+package pl.mp.animals.model;
 
 /**
  * Mammal representation.
