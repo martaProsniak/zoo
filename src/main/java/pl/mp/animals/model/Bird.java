@@ -9,11 +9,11 @@ public abstract class Bird extends Animal{
      */
     private String feathersColor;
 
-    public String getFeathersColor() {
+    public String getColor() {
         return feathersColor;
     }
 
-    public void setFeathersColor(String feathersColor) {
-        this.feathersColor = feathersColor;
+    public void setColor(String color) {
+        this.feathersColor = color;
     }
 }

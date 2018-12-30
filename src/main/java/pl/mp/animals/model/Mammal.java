@@ -9,11 +9,11 @@ public abstract class Mammal extends Animal {
      */
     private String furColor;
 
-    public String getFurColor() {
+    public String getColor() {
         return furColor;
     }
 
-    public void setFurColor(String furColor) {
-        this.furColor = furColor;
+    public void setColor(String color) {
+        this.furColor = color;
     }
 }

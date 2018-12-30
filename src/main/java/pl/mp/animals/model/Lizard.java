@@ -9,12 +9,12 @@ public abstract class Lizard extends Animal {
      */
     private String scaleColor;
 
-    public String getScaleColor() {
+    public String getColor() {
         return scaleColor;
     }
 
-    public void setScaleColor(String scaleColor) {
-        this.scaleColor = scaleColor;
+    public void setColor(String color) {
+        this.scaleColor = color;
     }
 
 }
