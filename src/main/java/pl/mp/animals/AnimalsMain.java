@@ -38,7 +38,7 @@ public class AnimalsMain {
 
             switch (command) {
                 case 1: {
-                    load();
+                    zoo = load();
                     break;
                 }
                 case 2: {
@@ -87,7 +87,7 @@ public class AnimalsMain {
                 } else if (animalSpecies.equals("iguana")) {
                     animal = new Iguana();
                 } else {
-                    System.out.println("Unknown spiecies!");
+                    System.out.println("Unknown species!");
                     break;
                 }
                 //Assign animal to an array
@@ -114,10 +114,10 @@ public class AnimalsMain {
                 } else if (animal instanceof Iguana) {
                     ((Iguana) animal).setColor(animalColor);
                 }
-                /* Check load method
+                //Check load method
                 System.out.println(i + " " + animal.getName() +
                         " " + animal.getAge());
-                animal.eat(); */
+                animal.eat();
             }
             return zoo;
         } catch (IOException ex) {
@@ -127,6 +127,7 @@ public class AnimalsMain {
     }
 
     private static void save(Scanner inputScanner, Animal[] animals) {
+        System.out.println("Where to save a file?");
         String file = inputScanner.next();
         try (FileWriter fw = new FileWriter(file)) {
             //Saves array size into the file
@@ -156,7 +157,7 @@ public class AnimalsMain {
                 } else if (animals[i] instanceof Wolf){
                     fw.write(((Wolf) animals[i]).getColor() + "\n");
                 } else if (animals[i] instanceof Iguana){
-                    fw.write(((Iguana) animals[i]).getColor());
+                    fw.write(((Iguana) animals[i]).getColor() + "\n");
                 }
             }
         } catch (IOException ex) {
