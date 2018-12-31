@@ -7,6 +7,7 @@ import pl.mp.animals.model.Wolf;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -16,10 +17,13 @@ import java.util.Scanner;
 public class AnimalsMain {
     /**
      * Application main method.
+     *
      * @param args Command line application starting arguments.
      */
     public static void main(String[] args) {
         System.out.println("Welcome to the ZOO!");
+
+        Animal[] zoo = new Animal[10];
 
         printMenu();
 
@@ -28,21 +32,24 @@ public class AnimalsMain {
 
         boolean running = true;
 
-        while (running){
+        while (running) {
             //Read next user command
             int command = inputScanner.nextInt();
 
-            switch (command){
-                case 1:{
+            switch (command) {
+                case 1: {
                     load();
                     break;
-                } case 2:{
-
+                }
+                case 2: {
+                    save(inputScanner, zoo);
                     break;
-                }case 3: {
+                }
+                case 3: {
                     running = false;
                     break;
-                }default:{
+                }
+                default: {
                     printMenu();
                 }
             }
@@ -50,15 +57,16 @@ public class AnimalsMain {
         }
 
     }
+
     //Prints user menu
-    private static void printMenu(){
+    private static void printMenu() {
         System.out.println("Choose action: \n" +
                 "1 - load file \n" +
                 "2 - save file \n" +
                 "3 - quit");
     }
 
-    private static Animal[] load () {
+    private static Animal[] load() {
         String file = "C:\\Programowanie\\Projects\\java-2018-11-17-animals\\src\\main\\java\\pl\\mp\\animals\\ZOO";
         try (FileReader fr = new FileReader(file);
              BufferedReader br = new BufferedReader(fr)) {
@@ -67,16 +75,16 @@ public class AnimalsMain {
 
             Animal[] zoo = new Animal[count];
 
-            for (int i = 0; i<count; i++) {
+            for (int i = 0; i < count; i++) {
                 //Read animal species
                 String animalSpecies = br.readLine();
-                //Create new animal according to spiecies
+                //Create new animal according to species
                 Animal animal = null;
-                if (animalSpecies.equals("wolf")){
+                if (animalSpecies.equals("wolf")) {
                     animal = new Wolf();
-                } else if (animalSpecies.equals("parrot")){
+                } else if (animalSpecies.equals("parrot")) {
                     animal = new Parrot();
-                } else if (animalSpecies.equals("iguana")){
+                } else if (animalSpecies.equals("iguana")) {
                     animal = new Iguana();
                 } else {
                     System.out.println("Unknown spiecies!");
@@ -99,7 +107,7 @@ public class AnimalsMain {
                 //Read animal color
                 String animalColor = br.readLine();
                 //Set animal color according to spiecies
-                if (animal instanceof Wolf){
+                if (animal instanceof Wolf) {
                     ((Wolf) animal).setColor(animalColor);
                 } else if (animal instanceof Parrot) {
                     ((Parrot) animal).setColor(animalColor);
@@ -115,6 +123,44 @@ public class AnimalsMain {
         } catch (IOException ex) {
             System.err.println(ex);
             return new Animal[0]; //returns empty table in case of exception
+        }
+    }
+
+    private static void save(Scanner inputScanner, Animal[] animals) {
+        String file = inputScanner.next();
+        try (FileWriter fw = new FileWriter(file)) {
+            //Saves array size into the file
+            fw.write(animals.length + "\n");
+
+            for (int i = 0; i < animals.length; i++) {
+                //Write animal species into the file
+                if (animals[i] instanceof Wolf){
+                    String species = "wolf";
+                    fw.write(species + "\n");
+                } else if (animals[i] instanceof Parrot){
+                    String species = "parrot";
+                    fw.write(species + "\n");
+                } else if (animals[i] instanceof Iguana){
+                    String species = "iguana";
+                    fw.write(species + "\n");
+                }
+                //Write animal name into the file
+                fw.write(animals[i].getName() + "\n");
+
+                //Write animal age into the file
+                fw.write(animals[i].getAge() + "\n");
+
+                //Write animal color into the file
+                if (animals[i] instanceof Parrot) {
+                    fw.write(((Parrot) animals[i]).getColor() + "\n");
+                } else if (animals[i] instanceof Wolf){
+                    fw.write(((Wolf) animals[i]).getColor() + "\n");
+                } else if (animals[i] instanceof Iguana){
+                    fw.write(((Iguana) animals[i]).getColor());
+                }
+            }
+        } catch (IOException ex) {
+            System.err.println(ex);
         }
     }
 }
