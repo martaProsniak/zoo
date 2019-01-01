@@ -1,6 +1,5 @@
 package pl.mp.animals;
 
-import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 import pl.mp.animals.model.Animal;
 import pl.mp.animals.model.Iguana;
 import pl.mp.animals.model.Parrot;
@@ -128,9 +127,6 @@ public class AnimalsMain {
                     animal = new Parrot();
                 } else if (animalSpecies.equals("iguana")) {
                     animal = new Iguana();
-                } else {
-                    System.out.println("Unknown species!");
-                    break;
                 }
                 //Assign animal to an array
                 zoo[i] = animal;
@@ -155,9 +151,6 @@ public class AnimalsMain {
                     ((Parrot) animal).setColor(animalColor);
                 } else if (animal instanceof Iguana) {
                     ((Iguana) animal).setColor(animalColor);
-                } else {
-                    System.out.println("Unknown species!");
-                    break;
                 }
             }
             System.out.println("File loaded!");
@@ -207,8 +200,7 @@ public class AnimalsMain {
                 } else if (animals[i] instanceof Iguana) {
                     fw.write(((Iguana) animals[i]).getColor() + "\n");
                 }
-                System.out.println("File saved!");
-            }
+            } System.out.println("File saved!");
         } catch (IOException ex) {
             System.err.println(ex);
         }
