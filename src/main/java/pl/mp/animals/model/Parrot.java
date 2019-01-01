@@ -11,11 +11,11 @@ public class Parrot extends Bird implements PlantEater {
 
     @Override
     public void eat() {
-        eatPlants();
+        System.out.println("Parrot " + getName() + " is eating.");;
     }
 
     @Override
     public void eatPlants() {
-        System.out.println(getName() + " is eating plants.");
+        System.out.println("Parrot " + getName() + " is eating plants.");
     }
 }

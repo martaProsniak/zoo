@@ -11,11 +11,11 @@ public class Wolf extends Mammal implements MeatEater {
 
     @Override
     public void eat() {
-        eatMeat();
+        System.out.println("Wolf " + getName() + " is eating.");
     }
 
     @Override
     public void eatMeat() {
-        System.out.println(getName() + " is eating meat.");
+        System.out.println("Wolf " + getName() + " is eating meat.");
     }
 }

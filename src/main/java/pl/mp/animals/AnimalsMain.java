@@ -30,6 +30,7 @@ public class AnimalsMain {
         //Create new Scanner object to reads user input
         Scanner inputScanner = new Scanner(System.in);
 
+        //Variable to create application main loop
         boolean running = true;
 
         while (running) {
@@ -46,6 +47,14 @@ public class AnimalsMain {
                     break;
                 }
                 case 3: {
+                    printZoo(zoo);
+                    break;
+                }
+                case 4: {
+                    feedAll(zoo);
+                    break;
+                }
+                case 0: {
                     running = false;
                     break;
                 }
@@ -63,9 +72,15 @@ public class AnimalsMain {
         System.out.println("Choose action: \n" +
                 "1 - load file \n" +
                 "2 - save file \n" +
-                "3 - quit");
+                "3 - print whole zoo \n" +
+                "4 - feed all animals \n" +
+                "0 - quit");
     }
 
+    /**
+     * Load information from file and converts it to an array.
+     * @return Animal array.
+     */
     private static Animal[] load() {
         String file = "C:\\Programowanie\\Projects\\java-2018-11-17-animals\\src\\main\\java\\pl\\mp\\animals\\ZOO";
         try (FileReader fr = new FileReader(file);
@@ -113,18 +128,24 @@ public class AnimalsMain {
                     ((Parrot) animal).setColor(animalColor);
                 } else if (animal instanceof Iguana) {
                     ((Iguana) animal).setColor(animalColor);
+                } else {
+                    System.out.println("Unknown species!");
+                    break;
                 }
-                //Check load method
-                System.out.println(i + " " + animal.getName() +
-                        " " + animal.getAge());
-                animal.eat();
             }
+            System.out.println("File loaded!");
             return zoo;
         } catch (IOException ex) {
             System.err.println(ex);
             return new Animal[0]; //returns empty table in case of exception
         }
     }
+
+    /**
+     * Save animals array into the file.
+     * @param inputScanner to read user input (file path).
+     * @param animals Animal array.
+     */
 
     private static void save(Scanner inputScanner, Animal[] animals) {
         System.out.println("Where to save a file?");
@@ -135,13 +156,13 @@ public class AnimalsMain {
 
             for (int i = 0; i < animals.length; i++) {
                 //Write animal species into the file
-                if (animals[i] instanceof Wolf){
+                if (animals[i] instanceof Wolf) {
                     String species = "wolf";
                     fw.write(species + "\n");
-                } else if (animals[i] instanceof Parrot){
+                } else if (animals[i] instanceof Parrot) {
                     String species = "parrot";
                     fw.write(species + "\n");
-                } else if (animals[i] instanceof Iguana){
+                } else if (animals[i] instanceof Iguana) {
                     String species = "iguana";
                     fw.write(species + "\n");
                 }
@@ -154,14 +175,51 @@ public class AnimalsMain {
                 //Write animal color into the file
                 if (animals[i] instanceof Parrot) {
                     fw.write(((Parrot) animals[i]).getColor() + "\n");
-                } else if (animals[i] instanceof Wolf){
+                } else if (animals[i] instanceof Wolf) {
                     fw.write(((Wolf) animals[i]).getColor() + "\n");
-                } else if (animals[i] instanceof Iguana){
+                } else if (animals[i] instanceof Iguana) {
                     fw.write(((Iguana) animals[i]).getColor() + "\n");
                 }
+                System.out.println("File saved!");
             }
         } catch (IOException ex) {
             System.err.println(ex);
+        }
+    }
+
+    /**
+     * Prints Animal array
+     * @param animals Animal array to be printed
+     */
+
+    private static void printZoo(Animal[] animals) {
+
+        System.out.println("Animals in our Zoo:");
+
+        for (int i = 0; i < animals.length; i++) {
+            System.out.print((i + 1) + ". Animal in the zoo is: " +
+                    animals[i].getName() + ", " +
+                    animals[i].getAge() + " years, ");
+            if (animals[i] instanceof Wolf) {
+                System.out.print("species: wolf, fur color: " +
+                        ((Wolf) animals[i]).getColor() + "\n");
+            } else if (animals[i] instanceof Parrot) {
+                System.out.print("species: parrot, feathers color: " +
+                        ((Parrot) animals[i]).getColor() + "\n");
+            } else if (animals[i] instanceof Iguana) {
+                System.out.print("species: iguana, scales color: " +
+                        ((Iguana) animals[i]).getColor() + "\n");
+            }
+        }
+    }
+
+    /**
+     * Feeds all animals in an array.
+     * @param animals Animal array.
+     */
+    private static void feedAll (Animal [] animals){
+        for (Animal a : animals){
+            a.eat();
         }
     }
 }
