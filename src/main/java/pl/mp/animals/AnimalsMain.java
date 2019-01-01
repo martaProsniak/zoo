@@ -1,5 +1,6 @@
 package pl.mp.animals;
 
+import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 import pl.mp.animals.model.Animal;
 import pl.mp.animals.model.Iguana;
 import pl.mp.animals.model.Parrot;
@@ -63,6 +64,18 @@ public class AnimalsMain {
                     feedPlantEaters(zoo);
                     break;
                 }
+                case 7: {
+                    howl(zoo);
+                    break;
+                }
+                case 8: {
+                    hiss(zoo);
+                    break;
+                }
+                case 9:{
+                    tweet(zoo);
+                    break;
+                }
                 case 0: {
                     running = false;
                     break;
@@ -85,6 +98,9 @@ public class AnimalsMain {
                 "4 - feed all animals \n" +
                 "5 - feed the meat eaters \n" +
                 "6 - feed the plant eaters \n" +
+                "7 - speak with wolves \n" +
+                "8 - speak with iguanas \n" +
+                "9 - speak with parrots \n" +
                 "0 - quit");
     }
 
@@ -256,6 +272,42 @@ public class AnimalsMain {
                 ((Parrot) a).eatPlants();
             } else if (a instanceof Iguana){
                 ((Iguana) a).eatPlants();
+            }
+        }
+    }
+
+    /**
+     * Calls howl method from Wolf class.
+     * @param animals Animal array.
+     */
+    private static void howl (Animal [] animals ){
+        for (Animal a : animals){
+            if (a instanceof Wolf){
+                ((Wolf) a).howl();
+            }
+        }
+    }
+
+    /**
+     * Calls hiss method from Iguana class.
+     * @param animals Animal array.
+     */
+    private static void hiss (Animal [] animals ){
+        for (Animal a : animals){
+            if (a instanceof Iguana){
+                ((Iguana) a).hiss();
+            }
+        }
+    }
+
+    /**
+     * Calls tweet method from Parrot class.
+     * @param animals Animal array.
+     */
+    private static void tweet (Animal[] animals){
+        for(Animal a : animals){
+            if (a instanceof Parrot){
+                ((Parrot) a).tweet();
             }
         }
     }
