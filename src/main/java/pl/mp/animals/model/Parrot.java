@@ -1,5 +1,7 @@
 package pl.mp.animals.model;
 
+import java.io.Serializable;
+
 /**
  * Parrot representation.
  */

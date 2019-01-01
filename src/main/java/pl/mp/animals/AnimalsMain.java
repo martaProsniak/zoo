@@ -76,10 +76,11 @@ public class AnimalsMain {
                     saveBinaryZoo(inputScanner, zoo);
                     break;
                 }
-               /* case 11: {
-                    loadBinaryZoo(inputScanner, zoo);
+               case 11: {
+                    zoo = loadBinaryZoo(inputScanner);
+                    printZoo(zoo);
                     break;
-                } */
+                }
                 case 0: {
                     running = false;
                     break;
@@ -88,9 +89,7 @@ public class AnimalsMain {
                     printMenu();
                 }
             }
-
         }
-
     }
 
     //Prints user menu
@@ -106,7 +105,7 @@ public class AnimalsMain {
                 "8 - speak with iguanas \n" +
                 "9 - speak with parrots \n" +
                 "10 - save animals into binary file \n" +
-               // "11 - load animals from binary file \n" +
+                "11 - load animals from binary file \n" +
                 "0 - quit");
     }
 
@@ -312,7 +311,7 @@ public class AnimalsMain {
     }
 
     /**
-     * Saves animal array into a binary file.
+     * Saves animal array into binary file.
      * @param inputScanner User input - file path.
      * @param animals Animal array.
      */
@@ -322,8 +321,30 @@ public class AnimalsMain {
         try (FileOutputStream fos = new FileOutputStream(file);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(animals);
+            System.out.println("File saved!");
         } catch (IOException ex) {
             System.err.println(ex);
         }
     }
+
+    /**
+     * Loads animals from binary file.
+     * @param inputScanner user input - file.
+     * @return Animals array.
+     */
+    private static Animal[] loadBinaryZoo (Scanner inputScanner) {
+        System.out.println("Enter file path:");
+        String file = inputScanner.next();
+        try (FileInputStream fis = new FileInputStream(file);
+             ObjectInputStream ois = new ObjectInputStream(fis)){
+            return (Animal[]) ois.readObject();
+        }catch (IOException | ClassNotFoundException ex){
+            System.err.println(ex);
+            return null;
+        }
+    }
+
 }
+
+
+

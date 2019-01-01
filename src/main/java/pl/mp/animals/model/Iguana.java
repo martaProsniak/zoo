@@ -1,9 +1,11 @@
 package pl.mp.animals.model;
 
+import java.io.Serializable;
+
 /**
  * Iguana representation.
  */
-public class Iguana extends Lizard implements PlantEater{
+public class Iguana extends Lizard implements PlantEater {
 
     public void hiss(){
         System.out.println(getName() + " is hissing.");

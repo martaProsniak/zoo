@@ -1,9 +1,11 @@
 package pl.mp.animals.model;
 
+import java.io.Serializable;
+
 /**
  * Animal representation.
  */
-public abstract class Animal {
+public abstract class Animal implements Serializable {
     /**
      * Animal name.
      */
