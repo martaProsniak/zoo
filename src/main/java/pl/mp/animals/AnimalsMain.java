@@ -5,10 +5,7 @@ import pl.mp.animals.model.Iguana;
 import pl.mp.animals.model.Parrot;
 import pl.mp.animals.model.Wolf;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -75,6 +72,14 @@ public class AnimalsMain {
                     tweet(zoo);
                     break;
                 }
+                case 10: {
+                    saveBinaryZoo(inputScanner, zoo);
+                    break;
+                }
+               /* case 11: {
+                    loadBinaryZoo(inputScanner, zoo);
+                    break;
+                } */
                 case 0: {
                     running = false;
                     break;
@@ -100,6 +105,8 @@ public class AnimalsMain {
                 "7 - speak with wolves \n" +
                 "8 - speak with iguanas \n" +
                 "9 - speak with parrots \n" +
+                "10 - save animals into binary file \n" +
+               // "11 - load animals from binary file \n" +
                 "0 - quit");
     }
 
@@ -301,6 +308,22 @@ public class AnimalsMain {
             if (a instanceof Parrot){
                 ((Parrot) a).tweet();
             }
+        }
+    }
+
+    /**
+     * Saves animal array into a binary file.
+     * @param inputScanner User input - file path.
+     * @param animals Animal array.
+     */
+    private static void saveBinaryZoo(Scanner inputScanner, Animal[] animals) {
+        System.out.println("Where to save a file?");
+        String file = inputScanner.next();
+        try (FileOutputStream fos = new FileOutputStream(file);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(animals);
+        } catch (IOException ex) {
+            System.err.println(ex);
         }
     }
 }
