@@ -23,6 +23,7 @@ public class AnimalsMain {
     public static void main(String[] args) {
         System.out.println("Welcome to the ZOO!");
 
+        //New animal array
         Animal[] zoo = new Animal[10];
 
         printMenu();
@@ -39,7 +40,7 @@ public class AnimalsMain {
 
             switch (command) {
                 case 1: {
-                    zoo = load();
+                    zoo = load(); //assign result of load method to global Animal array
                     break;
                 }
                 case 2: {
@@ -52,6 +53,14 @@ public class AnimalsMain {
                 }
                 case 4: {
                     feedAll(zoo);
+                    break;
+                }
+                case 5: {
+                    feedMeetEaters(zoo);
+                    break;
+                }
+                case 6: {
+                    feedPlantEaters(zoo);
                     break;
                 }
                 case 0: {
@@ -74,6 +83,8 @@ public class AnimalsMain {
                 "2 - save file \n" +
                 "3 - print whole zoo \n" +
                 "4 - feed all animals \n" +
+                "5 - feed the meat eaters \n" +
+                "6 - feed the plant eaters \n" +
                 "0 - quit");
     }
 
@@ -220,6 +231,32 @@ public class AnimalsMain {
     private static void feedAll (Animal [] animals){
         for (Animal a : animals){
             a.eat();
+        }
+    }
+
+    /**
+     * Meat eaters call method implemented from Meat Eater interface.
+     * @param animals Animal array.
+     */
+    private static void feedMeetEaters (Animal [] animals) {
+        for (Animal a : animals) {
+            if (a instanceof Wolf){
+                ((Wolf) a).eatMeat();
+            }
+        }
+    }
+
+    /**
+     * Plant eaters call method implemented from Plant Eater interface.
+     * @param animals Animal array.
+     */
+    private static void feedPlantEaters (Animal [] animals) {
+        for (Animal a : animals) {
+            if (a instanceof Parrot){
+                ((Parrot) a).eatPlants();
+            } else if (a instanceof Iguana){
+                ((Iguana) a).eatPlants();
+            }
         }
     }
 }
