@@ -18,7 +18,7 @@ public class AnimalsMain {
      * @param args Command line application starting arguments.
      */
     public static void main(String[] args) {
-        System.out.println("Welcome to the ZOO!");
+        System.out.println("Welcome to the ZOO! + \n");
 
         //New animal array
         Animal[] zoo = new Animal[10];
@@ -114,7 +114,7 @@ public class AnimalsMain {
      * @return Animal array.
      */
     private static Animal[] load() {
-        String file = "C:\\Programowanie\\Projects\\java-2018-11-17-animals\\src\\main\\java\\pl\\mp\\animals\\ZOO";
+        String file = "pl/mp/animals/ZOO";
         try (FileReader fr = new FileReader(file);
              BufferedReader br = new BufferedReader(fr)) {
             String animalsCount = br.readLine();
@@ -127,12 +127,16 @@ public class AnimalsMain {
                 String animalSpecies = br.readLine();
                 //Create new animal according to species
                 Animal animal = null;
-                if (animalSpecies.equals("wolf")) {
-                    animal = new Wolf();
-                } else if (animalSpecies.equals("parrot")) {
-                    animal = new Parrot();
-                } else if (animalSpecies.equals("iguana")) {
-                    animal = new Iguana();
+                switch (animalSpecies) {
+                    case "wolf":
+                        animal = new Wolf();
+                        break;
+                    case "parrot":
+                        animal = new Parrot();
+                        break;
+                    case "iguana":
+                        animal = new Iguana();
+                        break;
                 }
                 //Assign animal to an array
                 zoo[i] = animal;
