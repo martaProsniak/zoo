@@ -1,12 +1,16 @@
 package pl.mp.animals;
 
 import pl.mp.animals.model.Animal;
+import pl.mp.animals.model.Bird;
 import pl.mp.animals.model.Iguana;
+import pl.mp.animals.model.Lizard;
+import pl.mp.animals.model.Mammal;
+import pl.mp.animals.model.MeatEater;
 import pl.mp.animals.model.Parrot;
+import pl.mp.animals.model.PlantEater;
 import pl.mp.animals.model.Wolf;
 
 import java.io.*;
-import java.util.Scanner;
 
 /**
  * Application main class.
@@ -21,96 +25,37 @@ public class AnimalsMain {
         System.out.println("Welcome to the ZOO!");
 
         //New animal array
-        Animal[] zoo = new Animal[10];
+        Animal[] zoo;
 
         //New path - text files will be created here
         String filePath = "/tmp/ZooCopy.txt";
         //New path - binary files will be created here
         String binFilePath = "/tmp/ZooBin";
 
-        //Create new Scanner object to reads user input
-        Scanner inputScanner = new Scanner(System.in);
+        //Ex. 7
+        zoo = load();
+        save(filePath, zoo);
 
-        //Variable to create application main loop
-        boolean running = true;
+        //Ex. 8
+        printZoo(zoo);
 
-        while (running) {
-            //Read next user command
-            int command = inputScanner.nextInt();
+        //Ex. 9
+        feedAll(zoo);
+        feedMeetEaters(zoo);
+        feedPlantEaters(zoo);
 
-            switch (command) {
-                case 1: {
-                    zoo = load(); //assign result of load method to global Animal array
-                    break;
-                }
-                case 2: {
-                    save(filePath, zoo);
-                    break;
-                }
-                case 3: {
-                    printZoo(zoo);
-                    break;
-                }
-                case 4: {
-                    feedAll(zoo);
-                    break;
-                }
-                case 5: {
-                    feedMeetEaters(zoo);
-                    break;
-                }
-                case 6: {
-                    feedPlantEaters(zoo);
-                    break;
-                }
-                case 7: {
-                    howl(zoo);
-                    break;
-                }
-                case 8: {
-                    hiss(zoo);
-                    break;
-                }
-                case 9:{
-                    tweet(zoo);
-                    break;
-                }
-                case 10: {
-                    saveBinaryZoo(binFilePath, zoo);
-                    break;
-                }
-               case 11: {
-                    zoo = loadBinaryZoo(binFilePath);
-                    printZoo(zoo);
-                    break;
-                }
-                case 0: {
-                    running = false;
-                    break;
-                }
-                default: {
-                    printMenu();
-                }
-            }
-        }
+        //Ex. 10
+        howl(zoo);
+        hiss(zoo);
+        tweet(zoo);
+
+        //Ex. 11
+        saveBinaryZoo(binFilePath, zoo);
+        zoo = loadBinaryZoo(binFilePath);
+        printZoo(zoo);
+
     }
 
-    //Prints user menu
-    private static void printMenu() {
-        System.out.println("Choose action: \n" +
-                "1 - load file \n" +
-                "2 - save file \n" +
-                "3 - print whole zoo \n" +
-                "4 - feed all animals \n" +
-                "5 - feed the meat eaters \n" +
-                "6 - feed the plant eaters \n" +
-                "7 - speak with wolves \n" +
-                "8 - speak with iguanas \n" +
-                "9 - speak with parrots \n" +
-                "10 - save animals into binary file \n" +
-                "11 - load animals from binary file \n" +
-                "0 - quit");
-    }
 
     /**
      * Load information from file and converts it to an array.
@@ -158,15 +103,14 @@ public class AnimalsMain {
                 //Read animal color
                 String animalColor = br.readLine();
                 //Set animal color according to spiecies
-                if (animal instanceof Wolf) {
-                    ((Wolf) animal).setColor(animalColor);
-                } else if (animal instanceof Parrot) {
-                    ((Parrot) animal).setColor(animalColor);
-                } else if (animal instanceof Iguana) {
-                    ((Iguana) animal).setColor(animalColor);
+                if (animal instanceof Mammal) {
+                    ((Mammal) animal).setColor(animalColor);
+                } else if (animal instanceof Bird) {
+                    ((Bird) animal).setColor(animalColor);
+                } else if (animal instanceof Lizard) {
+                    ((Lizard) animal).setColor(animalColor);
                 }
             }
-            System.out.println("File loaded!");
             return zoo;
         } catch (IOException ex) {
             System.err.println(ex);
@@ -204,21 +148,21 @@ public class AnimalsMain {
                 fw.write(animals[i].getAge() + "\n");
 
                 //Write animal color into the file
-                if (animals[i] instanceof Parrot) {
-                    fw.write(((Parrot) animals[i]).getColor() + "\n");
-                } else if (animals[i] instanceof Wolf) {
-                    fw.write(((Wolf) animals[i]).getColor() + "\n");
-                } else if (animals[i] instanceof Iguana) {
-                    fw.write(((Iguana) animals[i]).getColor() + "\n");
+                if (animals[i] instanceof Bird) {
+                    fw.write(((Bird) animals[i]).getColor() + "\n");
+                } else if (animals[i] instanceof Mammal) {
+                    fw.write(((Mammal) animals[i]).getColor() + "\n");
+                } else if (animals[i] instanceof Lizard) {
+                    fw.write(((Lizard) animals[i]).getColor() + "\n");
                 }
-            } System.out.println("File saved!");
+            }
         } catch (IOException ex) {
             System.err.println(ex);
         }
     }
 
     /**
-     * Prints Animal array
+     * Prints Animal array (name, age, species and color).
      * @param animals Animal array to be printed
      */
 
@@ -231,14 +175,19 @@ public class AnimalsMain {
                     animals[i].getName() + ", " +
                     animals[i].getAge() + " years, ");
             if (animals[i] instanceof Wolf) {
-                System.out.print("species: wolf, fur color: " +
-                        ((Wolf) animals[i]).getColor() + "\n");
+                System.out.print("species: wolf, ");
             } else if (animals[i] instanceof Parrot) {
-                System.out.print("species: parrot, feathers color: " +
-                        ((Parrot) animals[i]).getColor() + "\n");
+                System.out.print("species: parrot, ");
             } else if (animals[i] instanceof Iguana) {
-                System.out.print("species: iguana, scales color: " +
-                        ((Iguana) animals[i]).getColor() + "\n");
+                System.out.print("species: iguana, ");
+            }
+
+            if (animals[i] instanceof Mammal){
+                System.out.println("fur color: " + ((Mammal) animals[i]).getColor());
+            } else if (animals[i] instanceof Bird){
+                System.out.println("feathers color: " + ((Bird) animals[i]).getColor());
+            } else if (animals[i] instanceof Lizard){
+                System.out.println("scales color: " + ((Lizard) animals[i]).getColor());
             }
         }
     }
@@ -259,8 +208,8 @@ public class AnimalsMain {
      */
     private static void feedMeetEaters (Animal [] animals) {
         for (Animal a : animals) {
-            if (a instanceof Wolf){
-                ((Wolf) a).eatMeat();
+            if (a instanceof MeatEater){
+                ((MeatEater) a).eatMeat();
             }
         }
     }
@@ -271,10 +220,8 @@ public class AnimalsMain {
      */
     private static void feedPlantEaters (Animal [] animals) {
         for (Animal a : animals) {
-            if (a instanceof Parrot){
-                ((Parrot) a).eatPlants();
-            } else if (a instanceof Iguana){
-                ((Iguana) a).eatPlants();
+            if (a instanceof PlantEater){
+                ((PlantEater) a).eatPlants();
             }
         }
     }
@@ -324,7 +271,6 @@ public class AnimalsMain {
         try (FileOutputStream fos = new FileOutputStream(file);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(animals);
-            System.out.println("File saved!");
         } catch (IOException ex) {
             System.err.println(ex);
         }
