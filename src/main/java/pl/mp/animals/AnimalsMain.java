@@ -18,12 +18,15 @@ public class AnimalsMain {
      * @param args Command line application starting arguments.
      */
     public static void main(String[] args) {
-        System.out.println("Welcome to the ZOO! + \n");
+        System.out.println("Welcome to the ZOO!");
 
         //New animal array
         Animal[] zoo = new Animal[10];
 
-        printMenu();
+        //New path - text files will be created here
+        String filePath = "/tmp/ZooCopy.txt";
+        //New path - binary files will be created here
+        String binFilePath = "/tmp/ZooBin";
 
         //Create new Scanner object to reads user input
         Scanner inputScanner = new Scanner(System.in);
@@ -41,7 +44,7 @@ public class AnimalsMain {
                     break;
                 }
                 case 2: {
-                    save(inputScanner, zoo);
+                    save(filePath, zoo);
                     break;
                 }
                 case 3: {
@@ -73,11 +76,11 @@ public class AnimalsMain {
                     break;
                 }
                 case 10: {
-                    saveBinaryZoo(inputScanner, zoo);
+                    saveBinaryZoo(binFilePath, zoo);
                     break;
                 }
                case 11: {
-                    zoo = loadBinaryZoo(inputScanner);
+                    zoo = loadBinaryZoo(binFilePath);
                     printZoo(zoo);
                     break;
                 }
@@ -114,7 +117,7 @@ public class AnimalsMain {
      * @return Animal array.
      */
     private static Animal[] load() {
-        String file = "pl/mp/animals/ZOO";
+        String file = "ZOO.txt";
         try (FileReader fr = new FileReader(file);
              BufferedReader br = new BufferedReader(fr)) {
             String animalsCount = br.readLine();
@@ -173,13 +176,11 @@ public class AnimalsMain {
 
     /**
      * Save animals array into the file.
-     * @param inputScanner to read user input (file path).
+     * @param file Path to the file.
      * @param animals Animal array.
      */
 
-    private static void save(Scanner inputScanner, Animal[] animals) {
-        System.out.println("Where to save a file?");
-        String file = inputScanner.next();
+    private static void save(String file, Animal[] animals) { ;
         try (FileWriter fw = new FileWriter(file)) {
             //Saves array size into the file
             fw.write(animals.length + "\n");
@@ -316,12 +317,10 @@ public class AnimalsMain {
 
     /**
      * Saves animal array into binary file.
-     * @param inputScanner User input - file path.
+     * @param file File path.
      * @param animals Animal array.
      */
-    private static void saveBinaryZoo(Scanner inputScanner, Animal[] animals) {
-        System.out.println("Where to save a file?");
-        String file = inputScanner.next();
+    private static void saveBinaryZoo(String file, Animal[] animals) {
         try (FileOutputStream fos = new FileOutputStream(file);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(animals);
@@ -333,12 +332,10 @@ public class AnimalsMain {
 
     /**
      * Loads animals from binary file.
-     * @param inputScanner user input - file.
+     * @param file File path.
      * @return Animals array.
      */
-    private static Animal[] loadBinaryZoo (Scanner inputScanner) {
-        System.out.println("Enter file path:");
-        String file = inputScanner.next();
+    private static Animal[] loadBinaryZoo (String file) {
         try (FileInputStream fis = new FileInputStream(file);
              ObjectInputStream ois = new ObjectInputStream(fis)){
             return (Animal[]) ois.readObject();
